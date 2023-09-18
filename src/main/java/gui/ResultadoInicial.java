@@ -14,16 +14,15 @@ import modelo.Usuario;
  *
  * @author Facilitador Maker
  */
-public class Resultado extends javax.swing.JFrame {
+public class ResultadoInicial extends javax.swing.JFrame {
 
     /**
      * Creates new form Resultado
      */
-    public Resultado(int ra) {
+    public ResultadoInicial(int ra) {
         initComponents();
         UsuarioDAO consulta = new UsuarioDAO();
-        try {
-            Usuario novo =consulta.pessoa(ra);
+            Usuario novo =consulta.buscaRA(ra);
             int numRa = (int)novo.getRa();
             jTextRA.setText(Integer.toString(numRa));
             jTextNome.setText(novo.getNome());
@@ -33,9 +32,6 @@ public class Resultado extends javax.swing.JFrame {
             jTextEmailPai.setText(novo.getEmailPai());
             jTextNomeMae.setText(novo.getNomeMae());
             jTextEmailMae.setText(novo.getEmailMae());
-        } catch (IOException ex) {
-            Logger.getLogger(Pesquisa.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**
@@ -232,20 +228,21 @@ public class Resultado extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResultadoInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResultadoInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResultadoInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResultadoInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Resultado(0).setVisible(true);
+                new ResultadoInicial(0).setVisible(true);
             }
         });
     }

@@ -20,7 +20,7 @@ public class Pesquisa extends javax.swing.JFrame {
      */
     public Pesquisa() {
         initComponents();
-        jTextField1.setDocument(new Numeros());
+        jTextFieldRA.setDocument(new Numeros());
     }
 
     /**
@@ -39,11 +39,11 @@ public class Pesquisa extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        jButtonPesquisar = new javax.swing.JButton();
+        jButtonLimpar = new javax.swing.JButton();
+        jTextFieldRA = new javax.swing.JTextField();
+        jTextFieldNome = new javax.swing.JTextField();
+        jTextFieldTurma = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
@@ -63,17 +63,17 @@ public class Pesquisa extends javax.swing.JFrame {
 
         jLabel4.setText("Turma");
 
-        jButton2.setText("Pesquisar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPesquisar.setText("Pesquisar");
+        jButtonPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonPesquisarActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Limpar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonLimpar.setText("Limpar");
+        jButtonLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonLimparActionPerformed(evt);
             }
         });
 
@@ -89,14 +89,14 @@ public class Pesquisa extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField2)
+                    .addComponent(jTextFieldRA)
+                    .addComponent(jTextFieldNome)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(jButtonPesquisar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(jButtonLimpar)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField3))
+                    .addComponent(jTextFieldTurma))
                 .addGap(54, 54, 54))
         );
         jPanel1Layout.setVerticalGroup(
@@ -105,19 +105,19 @@ public class Pesquisa extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldRA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButtonPesquisar)
+                    .addComponent(jButtonLimpar))
                 .addGap(15, 15, 15))
         );
 
@@ -159,34 +159,39 @@ public class Pesquisa extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int ra = Integer.parseInt(jTextField1.getText());
-        UsuarioDAO consulta = new UsuarioDAO();
-        try {
-            Usuario novo =consulta.pessoa(ra);
-            int numRa = (int)novo.getRa();
-            jTextField1.setText(Integer.toString(numRa));
-            jTextField2.setText(novo.getNome());
-            jTextField3.setText(novo.getTurma());
-        } catch (IOException ex) {
-            Logger.getLogger(Pesquisa.class.getName()).log(Level.SEVERE, null, ex);
+    private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
+        char[] periodo=new char[1];
+        if (! jTextFieldRA.getText().equals("")) {
+            try{
+                int ra = Integer.parseInt(jTextFieldRA.getText());
+                Resultado janela=new Resultado(ra);
+            }catch(NumberFormatException ex){}
+        }else if(! jTextFieldNome.getText().equals("")){
+            String nome = jTextFieldNome.getText();
+            ListaNomes janela=new ListaNomes(nome);
+        }else if(! jTextFieldTurma.getText().equals("")){
+            String turma = jTextFieldTurma.getText().toUpperCase();
+            if(turma.substring(0,1).matches("[0-9]*")&&turma.toUpperCase().substring(turma.length()-1).contains("A")){
+                turma=turma.substring(0,1)+"º ano A";
+            }else if(turma.substring(0,1).matches("[0-9]*")&&turma.toUpperCase().substring(turma.length()-1).contains("B")){
+                turma=turma.substring(0,1)+"º ano B";
+            }else if(turma.toUpperCase().contains("EM")){
+                turma=turma.substring(0,1)+"ª série";
+            }
+            ListaNomes janela=new ListaNomes(turma,0);
         }
-        Resultado result = new Resultado(ra);
-        NewJFrame janela=new NewJFrame(ra);
-        result.setVisible(true);
-        janela.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jButtonLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimparActionPerformed
+        jTextFieldRA.setText("");
+        jTextFieldNome.setText("");
+        jTextFieldTurma.setText("");
+    }//GEN-LAST:event_jButtonLimparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -226,8 +231,8 @@ public class Pesquisa extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonLimpar;
+    private javax.swing.JButton jButtonPesquisar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -235,8 +240,8 @@ public class Pesquisa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextFieldNome;
+    private javax.swing.JTextField jTextFieldRA;
+    private javax.swing.JTextField jTextFieldTurma;
     // End of variables declaration//GEN-END:variables
 }

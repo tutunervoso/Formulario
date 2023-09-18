@@ -20,14 +20,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class UsuarioDAO {
     private static final String fileName = "C:/Users/Facilitador Maker/Desktop/Lista Alunos/Monte - 2023/Lista/Lista consulta.xlsx";
     
-    public Usuario pessoa(int ra) throws IOException{
+    public List<Usuario> lista() throws IOException{
     List<Usuario> listaDados = new ArrayList<Usuario>();
 
         try{
             FileInputStream arquivo = new FileInputStream(new File(UsuarioDAO.fileName));
 
             XSSFWorkbook workbook = new XSSFWorkbook(arquivo);
-            XSSFSheet sheetDados = workbook.getSheetAt(0);
+            XSSFSheet sheetDados = workbook.getSheetAt(1);//antigo 0
 
             Iterator<Row> rowIterator = sheetDados.iterator();
             while(rowIterator.hasNext()){
@@ -52,17 +52,33 @@ public class UsuarioDAO {
                         case 3:
                             dados.setDataNasc(cell.getDateCellValue());
                         break;
-                        case 4:
+                        case 5:
                             dados.setNomePai(cell.getStringCellValue());
                         break;
-                        case 5:
+                        case 8:
                             dados.setEmailPai(cell.getStringCellValue());
                         break;
-                        case 6:
+                        case 9:
                             dados.setNomeMae(cell.getStringCellValue());
                         break;
-                        case 7:
+                        case 12:
                             dados.setEmailMae(cell.getStringCellValue());
+                        break;
+                        
+                        case 13:
+                            dados.setEndereco(cell.getStringCellValue());
+                        break;
+                        case 14:
+                            dados.setNumero(cell.getNumericCellValue());
+                        break;
+                        case 15:
+                            dados.setComplemento(cell.getStringCellValue());
+                        break;
+                        case 16:
+                            dados.setCep(cell.getStringCellValue());
+                        break;
+                        case 17:
+                            dados.setBairro(cell.getStringCellValue());
                         break;
                     }
                 }
@@ -73,11 +89,37 @@ public class UsuarioDAO {
             System.out.println("Arquivo não encontrado");
         }
         
+        return listaDados;
+    }
+    
+    public Usuario buscaRA(int ra){
+        
+        UsuarioDAO consulta = new UsuarioDAO();
+        try{
+            List<Usuario> listaDados = consulta.lista();
         for (int i = 0; i < listaDados.size(); i++) {
-            Usuario caixa = listaDados.get(i);
-            if (caixa.getRa()==ra) {
-                return caixa;
+            Usuario resultRA = listaDados.get(i);
+            if (resultRA.getRa()==ra) {
+                return resultRA;
             }
+        }
+        }catch(IOException e){}
+        return null;
+    }
+    
+    public Usuario buscaNome(String nome){
+        
+        UsuarioDAO consulta = new UsuarioDAO();
+        try{
+            List<Usuario> listaDados = consulta.lista();
+        for (int i = 0; i < listaDados.size(); i++) {
+            Usuario resultNome = listaDados.get(i);
+            if (resultNome.getNome().equals(nome)) {
+                return resultNome;
+            }
+        }
+        }catch(IOException e){
+            System.out.println("Sem nome");
         }
         return null;
     }

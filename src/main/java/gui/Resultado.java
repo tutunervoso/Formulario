@@ -8,44 +8,76 @@ import dao.UsuarioDAO;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import modelo.Usuario;
 
 /**
  *
  * @author Facilitador Maker
  */
-public class NewJFrame extends javax.swing.JFrame {
+public class Resultado extends javax.swing.JFrame {
 
     /**
      * Creates new form NewJFrame
      */
-    public NewJFrame(int ra) {
+    public Resultado(int ra) {
         initComponents();
-        jTabbedPane1.add("Aluno",jPanel1);
-        jTabbedPane1.add("Responsáveis",jPanel2);
-        jTabbedPane1.add("Endereço",jPanel3);
+        jTabbedPane1.add("Aluno", jPanel1);
+        jTabbedPane1.add("Responsáveis", jPanel2);
+        jTabbedPane1.add("Endereço", jPanel3);
         UsuarioDAO consulta = new UsuarioDAO();
         try {
-            Usuario novo=consulta.pessoa(ra);
-            int numRa=(int)novo.getRa();
+            Usuario novo = consulta.buscaRA(ra);
+            int numRa = (int) novo.getRa();
             jTextRA.setText(Integer.toString(numRa));
             jTextNome.setText(novo.getNome());
             jTextTurma.setText(novo.getTurma());
-            jTextData.setText(novo.getDataNasc().getDate() +"/"+((novo.getDataNasc().getMonth())+1)+"/"+((novo.getDataNasc().getYear())+1900));
+            jTextData.setText(novo.getDataNasc().getDate() + "/" + ((novo.getDataNasc().getMonth()) + 1) + "/" + ((novo.getDataNasc().getYear()) + 1900));
             jTextNomePai.setText(novo.getNomePai());
             jTextEmailPai.setText(novo.getEmailPai());
             jTextNomeMae.setText(novo.getNomeMae());
             jTextEmailMae.setText(novo.getEmailMae());
-            
             jTextEndereco.setText(novo.getEndereco());
-            int num=(int)novo.getNumero();
+            int num = (int) novo.getNumero();
             jTextNumero.setText(Integer.toString(num));
             jTextComplemento.setText(novo.getComplemento());
             jTextCEP.setText(novo.getCep());
             jTextBairro.setText(novo.getBairro());
-        } catch (IOException ex) {
-            Logger.getLogger(Pesquisa.class.getName()).log(Level.SEVERE, null, ex);
+            setVisible(true);
+        } catch (NullPointerException e) {
+            System.out.println("RA inválido");
+            Pesquisa janela = new Pesquisa();
+            janela.setVisible(true);
+            this.dispose();
+            JOptionPane.showMessageDialog(null, "RA Inválido", "Alerta", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public Resultado(String nome) {
+        initComponents();
+        jTabbedPane1.add("Aluno", jPanel1);
+        jTabbedPane1.add("Responsáveis", jPanel2);
+        jTabbedPane1.add("Endereço", jPanel3);
+        UsuarioDAO consulta = new UsuarioDAO();
+        Usuario novo = consulta.buscaNome(nome);
+
+        int numRa = (int) novo.getRa();
+        jTextRA.setText(Integer.toString(numRa));
+        jTextNome.setText(novo.getNome());
+        jTextTurma.setText(novo.getTurma());
+        jTextData.setText(novo.getDataNasc().getDate() + "/" + ((novo.getDataNasc().getMonth()) + 1) + "/" + ((novo.getDataNasc().getYear()) + 1900));
+        jTextNomePai.setText(novo.getNomePai());
+        jTextEmailPai.setText(novo.getEmailPai());
+        jTextNomeMae.setText(novo.getNomeMae());
+        jTextEmailMae.setText(novo.getEmailMae());
+
+        jTextEndereco.setText(novo.getEndereco());
+        int num = (int) novo.getNumero();
+        jTextNumero.setText(Integer.toString(num));
+        jTextComplemento.setText(novo.getComplemento());
+        jTextCEP.setText(novo.getCep());
+        jTextBairro.setText(novo.getBairro());
+        setVisible(true);
     }
 
     /**
@@ -146,7 +178,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelData)
                     .addComponent(jTextData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         jTextNome.setEditable(false);
@@ -206,7 +238,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelEmailMae)
                     .addComponent(jTextEmailMae, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jTextNomePai.setEditable(false);
@@ -305,7 +337,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(12, 12, 12))
         );
 
         jTextEndereco.setEditable(false);
@@ -337,12 +369,11 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButtonNvConsulta)
-                .addGap(146, 146, 146))
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(144, 144, 144)
+                        .addComponent(jButtonNvConsulta)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,10 +381,10 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonNvConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -384,7 +415,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextDataActionPerformed
 
     private void jButtonNvConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNvConsultaActionPerformed
-        Pesquisa novaConsulta=new Pesquisa();
+        Pesquisa novaConsulta = new Pesquisa();
         novaConsulta.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButtonNvConsultaActionPerformed
@@ -406,20 +437,21 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewJFrame(0).setVisible(true);
+                new Resultado(0).setVisible(true);
             }
         });
     }
