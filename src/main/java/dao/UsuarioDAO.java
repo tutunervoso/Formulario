@@ -8,6 +8,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import modelo.Usuario;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -18,13 +21,16 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author Facilitador Maker
  */
 public class UsuarioDAO {
-    private static final String fileName = "C:/Users/Facilitador Maker/Desktop/Lista Alunos/Monte - 2023/Lista/Lista consulta.xlsx";
-    
+    Path currentRelativePath=Paths.get("");
+    String url=currentRelativePath.toAbsolutePath().toString();
+    private static final String fileName = "/Lista consulta.xlsx";
+
     public List<Usuario> lista() throws IOException{
-    List<Usuario> listaDados = new ArrayList<Usuario>();
+        url=url.replace("\\","/");
+        List<Usuario> listaDados = new ArrayList<Usuario>();
 
         try{
-            FileInputStream arquivo = new FileInputStream(new File(UsuarioDAO.fileName));
+            FileInputStream arquivo = new FileInputStream(new File(url+UsuarioDAO.fileName));
 
             XSSFWorkbook workbook = new XSSFWorkbook(arquivo);
             XSSFSheet sheetDados = workbook.getSheetAt(1);//antigo 0

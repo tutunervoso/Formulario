@@ -26,6 +26,9 @@ public class Resultado extends javax.swing.JFrame {
         jTabbedPane1.add("Responsáveis", jPanel2);
         jTabbedPane1.add("Endereço", jPanel3);
         UsuarioDAO consulta = new UsuarioDAO();
+        if(ra<1000){
+            ra+=48000000;
+        }
         try {
             Usuario novo = consulta.buscaRA(ra);
             int numRa = (int) novo.getRa();

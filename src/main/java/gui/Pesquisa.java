@@ -161,7 +161,7 @@ public class Pesquisa extends javax.swing.JFrame {
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         char[] periodo=new char[1];
-        if (! jTextFieldRA.getText().equals("")) {
+        if(! jTextFieldRA.getText().equals("")){
             try{
                 int ra = Integer.parseInt(jTextFieldRA.getText());
                 Resultado janela=new Resultado(ra);
@@ -180,7 +180,9 @@ public class Pesquisa extends javax.swing.JFrame {
             }
             ListaNomes janela=new ListaNomes(turma,0);
         }
-        this.dispose();
+        if(!jTextFieldRA.getText().equals("") || !jTextFieldNome.getText().equals("") || !jTextFieldTurma.getText().equals("")){
+            this.dispose();
+        }
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
